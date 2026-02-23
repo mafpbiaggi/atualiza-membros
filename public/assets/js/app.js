@@ -24,7 +24,7 @@ if (formMembro) {
         const dadosForm = new FormData(formMembro);
 
         try {
-            const dados = await fetch("app.php", {
+            const dados = await fetch("../../api/membro.php", {
                 method: "POST",
                 body: dadosForm
             });
