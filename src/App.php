@@ -1,5 +1,5 @@
 <?php
-require_once 'database.php';
+require_once 'Database.php';
 
     //Função para validação de campos
     function validaCampos($dados, $regras) {

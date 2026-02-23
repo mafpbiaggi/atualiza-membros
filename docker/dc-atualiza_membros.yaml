@@ -1,43 +1,39 @@
-# compose: dc-ipvp-atualiza-membros.yaml
+# compose: dc-atualiza-membros.yaml
 
 networks:
   atualiza_membros:
-    ipam:
-      config:
-        - subnet: 192.168.3.0/29
-          gateway: 192.168.3.1
+    name: atualiza_membros
 
 services:
-  mariadb_atualiza_membros_ipvp:
+  db_atualiza_membros:
     image: mariadb:latest
-    container_name: mariadb_atualiza_membros_ipvp
+    container_name: db_atualiza_membros
     environment:
       - TZ=America/Sao_Paulo
-      - MYSQL_ROOT_PASSWORD=SENHA_ROOT
-      - MYSQL_DATABASE=NOME_DA_BASE
-      - MYSQL_USER=NOME_DE_USUÁRIO_MORTAL
-      - MYSQL_PASSWORD=SENHA_USUÁRIO_MORTAL
-    ports:
-      - 3308:3306
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
-      - /CAMINHO/DO/DIRETÓRIO/ipvp-atualiza-membros/database:/var/lib/mysql
-    restart: always
+      - ${ROOT_DIR}/database:/var/lib/mysql
+    restart: no
     networks:
-      atualiza_membros:
-        ipv4_address: 192.168.3.2
+      - atualiza_membros
 
   app_atualiza_membros:
+    image: atualiza-membros-app:1.0
     build:
-      context: /CAMINHO/DO/DIRETÓRIO/ipvp-atualiza-membros
+      context: ${ROOT_DIR}
       dockerfile: atualiza_membros.dockerfile
-    container_name: app_atualiza_membros_ipvp
+    container_name: app_atualiza_membros
+    env_file:
+      - .env
     volumes:
-        - /CAMINHO/DO/DIRETÓRIO/ipvp-atualiza-membros/data:/var/www/html
+      - ${ROOT_DIR}/app:/var/www/html
     ports:
-      - 8085:80
-    restart: always
+      - "8085:80"
+    restart: no
     networks:
-      atualiza_membros:
-        ipv4_address: 192.168.3.3
+      - atualiza_membros
     depends_on:
-      - mariadb_atualiza_membros_ipvp
+      - db_atualiza_membros
