@@ -23,7 +23,7 @@ services:
   app_atualiza_membros:
     image: atualiza-membros-app:1.0
     build:
-      context: ${ROOT_DIR}
+      context: ${BUILD_CONTEXT}
       dockerfile: atualiza_membros.dockerfile
     container_name: app_atualiza_membros
     env_file:
