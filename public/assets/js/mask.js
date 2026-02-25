@@ -3,19 +3,19 @@ function mask(input, type) {
 
     switch (type) {
         case 'CPF':
-            value = value.replace(/\D/g, '');
+            value = value.replaceAll(/\D/g, '');
             value = value.replace(/(\d{3})(\d)/, '$1.$2');
             value = value.replace(/(\d{3})(\d)/, '$1.$2');
             value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
             break;
         case 'RG':
-            value = value.replace(/[^0-9X]/g, '');
+            value = value.replaceAll(/[^0-9X]/g, '');
             value = value.replace(/^(\d{2})(\d)/, '$1.$2');
             value = value.replace(/^(\d{2}\.\d{3})(\d)/, '$1.$2');
             value = value.replace(/^(\d{2}\.\d{3}\.\d{3})([Xx\d])$/, '$1-$2');
             break;
         case 'CEP':
-            value = value.replace(/\D/g, '');
+            value = value.replaceAll(/\D/g, '');
             value = value.replace(/(\d{5})(\d{1,3})$/, '$1-$2');
             break;
         case 'TEL':
