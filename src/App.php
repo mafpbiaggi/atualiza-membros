@@ -1,5 +1,17 @@
 <?php
 
+// Função para validar o token CSRF
+function validaCsrf($token) {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    
+    if (empty($token) || empty($_SESSION['csrf_token'])) {
+        return false;
+    }
+    return hash_equals($_SESSION['csrf_token'], $token);
+}
+
 //Função para validação de campos
 function validaCampos($dados, $regras) {
     $erros = [];

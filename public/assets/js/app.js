@@ -35,6 +35,11 @@ if (formMembro) {
             if (resposta['status']) {
                 preparaSaida("alert alert-success", resposta['msg']);
                 formMembro.reset();
+    
+                const csrfInput = formMembro.querySelector('input[name="csrf_token"]');
+                if (csrfInput && resposta['csrf_token']) {
+                    csrfInput.value = resposta['csrf_token'];
+                }
             } else {
                 preparaSaida("alert alert-danger", resposta['msg']);
             }

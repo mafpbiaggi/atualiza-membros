@@ -1,6 +1,24 @@
 <?php
-
+require_once __DIR__ . '/../../src/Bootstrap.php';
 require_once __DIR__ . '/../../src/App.php';
+header('Content-Type: application/json');
+
+// Validação do método HTTP
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['status' => false, 'msg' => 'Método não permitido.']);
+    exit;
+}
+
+// Validação CSRF
+$tokenRecebido = $_POST['csrf_token'] ?? '';
+if (!validaCsrf($tokenRecebido)) {
+    http_response_code(403);
+    echo json_encode(['status' => false, 'msg' => 'Requisição inválida.']);
+    exit;
+}
+
+$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
 //Recebe os dados do formulário.
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -14,8 +32,10 @@ foreach ($regras as $campo => $regra) {
 $erros = validaCampos($dados, $regras);
 
 if ($erros) {
-echo json_encode(['status' => false, 'msg' => implode('\n', $erros)]);
-exit;
+    echo json_encode(['status' => false, 'msg' => implode('\n', $erros)]);
+    exit;
 }
 
-echo json_encode(addMembro($dados));
+$resultado = addMembro($dados);
+$resultado['csrf_token'] = $_SESSION['csrf_token'];
+echo json_encode($resultado);
