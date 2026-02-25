@@ -3,14 +3,12 @@ require_once __DIR__ . '/../../src/Bootstrap.php';
 require_once __DIR__ . '/../../src/App.php';
 header('Content-Type: application/json');
 
-// Validação do método HTTP
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['status' => false, 'msg' => 'Método não permitido.']);
     exit;
 }
 
-// Validação CSRF
 $tokenRecebido = $_POST['csrf_token'] ?? '';
 if (!validaCsrf($tokenRecebido)) {
     http_response_code(403);
@@ -32,7 +30,7 @@ foreach ($regras as $campo => $regra) {
 $erros = validaCampos($dados, $regras);
 
 if ($erros) {
-    echo json_encode(['status' => false, 'msg' => implode('\n', $erros)]);
+    echo json_encode(['status' => false, 'msg' => implode("\n", $erros), 'csrf_token' => $_SESSION['csrf_token']]);
     exit;
 }
 

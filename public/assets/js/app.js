@@ -12,7 +12,7 @@ const divAlerta = document.getElementById("divAlerta");
 const msgAlerta = document.getElementById("msgAlerta");
 
 if (divAlerta) divAlerta.className = "";
-if (msgAlerta) msgAlerta.innerHTML = "";
+if (msgAlerta) msgAlerta.innerText = "";
 
 if (formMembro) {
     formMembro.addEventListener("submit", async (e) => {
@@ -32,14 +32,15 @@ if (formMembro) {
 
             const resposta = await dados.json();
 
+            const csrfInput = formMembro.querySelector('input[name="csrf_token"]');
+            if (csrfInput && resposta['csrf_token']) {
+                csrfInput.value = resposta['csrf_token'];
+            }
+
             if (resposta['status']) {
                 preparaSaida("alert alert-success", resposta['msg']);
                 formMembro.reset();
-    
-                const csrfInput = formMembro.querySelector('input[name="csrf_token"]');
-                if (csrfInput && resposta['csrf_token']) {
-                    csrfInput.value = resposta['csrf_token'];
-                }
+
             } else {
                 preparaSaida("alert alert-danger", resposta['msg']);
             }
