@@ -23,6 +23,7 @@ function validaData($valor) {
 //Função para cadastramento de dados do membro
 function addMembro($dados) {
     require_once 'Database.php';
+    $conn = null;
 
     try {
         $conn = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4", $user, $pass,

@@ -4,11 +4,7 @@ function preparaSaida($class, $resp) {
 }
 
 function confirmaEnvio() {
-    if (confirm("Tem certeza que deseja enviar os dados? Caso queira revisar os campos, clique em CANCELAR.")) {
-        return true;
-    } else {
-        return false;
-    }
+    return confirm("Tem certeza que deseja enviar os dados? Caso queira revisar os campos, clique em CANCELAR.");
 }
 
 const formMembro = document.getElementById("formMembro");
@@ -37,15 +33,15 @@ if (formMembro) {
             const resposta = await dados.json();
 
             if (resposta['status']) {
-                preparaSaida("alert alert-success", resposta['msg'])
+                preparaSaida("alert alert-success", resposta['msg']);
                 formMembro.reset();
             } else {
-                preparaSaida("alert alert-danger", resposta['msg'])
+                preparaSaida("alert alert-danger", resposta['msg']);
             }
             
         } catch (error) {
-            preparaSaida("alert alert-danger", "Erro ao processar envio.\nContate o administrador.")
-            console.log(error)
+            preparaSaida("alert alert-danger", "Erro ao processar envio.\nContate o administrador.");
+            console.log(error);
         }
     });
 }
