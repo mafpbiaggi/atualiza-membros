@@ -29,7 +29,7 @@ if (empty($_SESSION['csrf_token'])) {
     </div>
 
     <div class="form-body">
-        <form method="POST" id="formMembro" style="margin-top: 50px; margin-bottom: 50px;">
+        <form method="POST" id="formMembro" class="form">
             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>" />
             <div class="row justify-content-md-center">
                 <div class="col col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
