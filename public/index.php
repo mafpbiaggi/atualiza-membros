@@ -15,7 +15,7 @@
 
 <body>
     <div class="header">
-        <img src="assets/img/logo_branco.svg" width="100px" />
+        <img src="assets/img/logo_branco.svg" alt="logo-branco" width="100px" />
         <h3>Igreja Presbiteriana de Vila Prudente</h3>
         <h5>Atualização de Rol de Membros | Ano <?php echo date('Y'); ?></h5>
     </div>

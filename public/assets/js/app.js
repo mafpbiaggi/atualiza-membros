@@ -1,3 +1,8 @@
+function preparaSaida($class, $resp) {
+    if (divAlerta) divAlerta.className = $class;
+    if (msgAlerta) msgAlerta.innerText = $resp;
+}
+
 function confirmaEnvio() {
     if (confirm("Tem certeza que deseja enviar os dados? Caso queira revisar os campos, clique em CANCELAR.")) {
         return true;
@@ -32,17 +37,15 @@ if (formMembro) {
             const resposta = await dados.json();
 
             if (resposta['status']) {
-                if (divAlerta) divAlerta.className = "alert alert-success";
-                if (msgAlerta) msgAlerta.innerHTML = resposta['msg'];
+                preparaSaida("alert alert-success", resposta['msg'])
                 formMembro.reset();
             } else {
-                if (divAlerta) divAlerta.className = "alert alert-danger";
-                if (msgAlerta) msgAlerta.innerHTML = resposta['msg'];
+                preparaSaida("alert alert-danger", resposta['msg'])
             }
             
         } catch (error) {
-            if (divAlerta) divAlerta.className = "alert alert-danger";
-            if (msgAlerta) msgAlerta.innerHTML = "Erro ao processar envio.<br>Contate o administrador.";
+            preparaSaida("alert alert-danger", "Erro ao processar envio.\nContate o administrador.")
+            console.log(error)
         }
     });
 }

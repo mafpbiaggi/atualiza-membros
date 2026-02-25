@@ -26,15 +26,11 @@ require_once 'Database.php';
         global $host, $user, $pass, $dbname, $port;
         try {
             $conn = new PDO("mysql:host=$host;port=$port;dbname=" . $dbname, $user, $pass);
-            $church_id = 22;
-            $user_id = 66;
-
-            $queryProf = "INSERT INTO profissaos (nome, church_id, user_id, created, modified) VALUES (:nome, :church_id, :user_id, NOW(), NOW())";
+            
+            $queryProf = "INSERT INTO profissaos (nome, church_id, user_id, created, modified) VALUES (:nome, 22, 66, NOW(), NOW())";
 
             $stmtProf = $conn->prepare($queryProf);
             $stmtProf->bindValue(':nome', trim(mb_strtoupper($dados['profissao'])));
-            $stmtProf->bindValue(':church_id', $church_id);
-            $stmtProf->bindValue(':user_id', $user_id);
             $stmtProf->execute();
 
             $profissao_id = $conn->lastInsertId();
@@ -44,7 +40,7 @@ require_once 'Database.php';
                         dataprofe, pastorprofe, igrejaprofe, nomemae, nomepai, church_id, user_id, tipo, created, modified) VALUES (:nome, :sexo,
                         :datanascimento, :naturalidade, :email, :cel, :fone, :rg, :cpf, :estadocivil, :datacasamento, :nomeconjuge, :escolaridade_id,
                         :profissao_id, :batizado, :databatismo, :pastorbatismo, :igrejabatismo, :profissaofe, :dataprofe, :pastorprofe, :igrejaprofe,
-                        :nomemae, :nomepai, :church_id, :user_id, 'Membro', NOW(), NOW())";
+                        :nomemae, :nomepai, 22, 66, 'Membro', NOW(), NOW())";
 
             $datacasamento = validaData($dados['datacasamento'] ?? null);
             $databatismo  = validaData($dados['databatismo'] ?? null);
@@ -75,14 +71,12 @@ require_once 'Database.php';
             $stmtMemb->bindValue(':igrejaprofe', trim(mb_strtoupper($dados['igrejaprofe'])));
             $stmtMemb->bindValue(':nomemae', trim(mb_strtoupper($dados['nomemae'])));
             $stmtMemb->bindValue(':nomepai', trim(mb_strtoupper($dados['nomepai'])));
-            $stmtMemb->bindValue(':church_id', $church_id);
-            $stmtMemb->bindValue(':user_id', $user_id);
             $stmtMemb->execute();
 
             $membro_id = $conn->lastInsertId();
 
-            $queryEnd = "INSERT INTO enderecos (logradouro, numero, complemento, bairro, cep, cidade, estado, membro_id, user_id, church_id, created, modified) 
-            VALUES (:logradouro, :numero, :complemento, :bairro, :cep, :cidade, :estado, :membro_id, :user_id, :church_id, NOW(), NOW())";
+            $queryEnd = "INSERT INTO enderecos (logradouro, numero, complemento, bairro, cep, cidade, estado, membro_id, user_id, church_id, created, modified)
+            VALUES (:logradouro, :numero, :complemento, :bairro, :cep, :cidade, :estado, :membro_id, 66, 22, NOW(), NOW())";
 
             $stmtEnd = $conn->prepare($queryEnd);
             $stmtEnd->bindValue(':logradouro', trim(mb_strtoupper($dados['logradouro'])));
@@ -93,14 +87,12 @@ require_once 'Database.php';
             $stmtEnd->bindValue(':cidade', trim(mb_strtoupper($dados['cidade'])));
             $stmtEnd->bindValue(':estado', $dados['estado']);
             $stmtEnd->bindValue(':membro_id', $membro_id);
-            $stmtEnd->bindValue(':user_id', $user_id);
-            $stmtEnd->bindValue(':church_id', $church_id);
             $stmtEnd->execute();
 
             return ['status' => true, 'msg' => "Dados enviados com sucesso."];
         
         } catch (PDOException $err) {
-            return ['status' => false, 'msg' => "Não foi possível finalizar o cadastramento.<br>Contate o administrador."];
+            return ['status' => false, 'msg' => "Não foi possível finalizar o cadastramento.\nContate o administrador."];
         }
     }
 
@@ -139,5 +131,5 @@ require_once 'Database.php';
         'profissaofe' => ['required' => true],
         'dataprofe' => ['required' => false],
         'pastorprofe' => ['required' => false],
-        'igrejaprofe' => ['required' => false], 
+        'igrejaprofe' => ['required' => false],
     ];
