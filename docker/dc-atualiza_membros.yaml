@@ -16,7 +16,7 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - ${ROOT_DIR}/database:/var/lib/mysql
-    restart: no
+    restart: always
     networks:
       - atualiza_membros
 
@@ -31,8 +31,8 @@ services:
     volumes:
       - ${ROOT_DIR}/app:/var/www/html
     ports:
-      - "8085:80"
-    restart: no
+      - "${PORT_MAPPING}:80"
+    restart: always
     networks:
       - atualiza_membros
     depends_on:
