@@ -1,4 +1,4 @@
-/*M!999999\- enable the sandbox mode */ 
+-- M!999999\- enable the sandbox mode -- 
 -- MariaDB dump 10.19-11.5.2-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: atualiza_membros_ipvp
@@ -75,7 +75,7 @@ CREATE TABLE `membros` (
   `latitude` varchar(50) DEFAULT NULL,
   `longitude` varchar(50) DEFAULT NULL,
   `rg` varchar(20) DEFAULT NULL,
-  `cpf` varchar(20) DEFAULT NULL,
+  `cpf` varchar(14) NOT NULL UNIQUE,
   `email` varchar(150) DEFAULT NULL,
   `fone` varchar(20) DEFAULT NULL,
   `fone2` varchar(20) DEFAULT NULL,
