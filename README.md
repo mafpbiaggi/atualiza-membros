@@ -80,7 +80,7 @@ diretório-raiz/
    No diretório `docker/`, execute:
 
    ```sh
-   docker compose -f dc-atualiza_membros.yaml up --build
+   docker compose -f dc-atualiza_membros.yaml up -d --build
    ```
 
    Isso irá criar e iniciar os containers do banco de dados e da aplicação, mapeando os diretórios conforme especificado.
