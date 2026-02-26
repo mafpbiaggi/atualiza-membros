@@ -27,7 +27,9 @@ foreach ($regras as $campo => $regra) {
     }
 }
 
-$erros = validaCampos($dados, $regras);
+$retorno = validaCampos($dados, $regras);
+$erros = $retorno['erros'];
+$dados = $retorno['dados'];
 
 if ($erros) {
     echo json_encode(['status' => false, 'msg' => implode("\n", $erros), 'csrf_token' => $_SESSION['csrf_token']]);

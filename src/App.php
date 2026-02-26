@@ -58,7 +58,7 @@ function validaCampos($dados, $regras) {
         }
     }
 
-    return $erros;
+    return ['erros' => $erros, 'dados' => $dados];
 }
 
 //Função para validação de datas
