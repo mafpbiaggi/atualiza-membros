@@ -6,7 +6,7 @@ networks:
 
 services:
   db_atualiza_membros:
-    image: mariadb:latest
+    image: mariadb:12.2
     container_name: db_atualiza_membros
     environment:
       - TZ=America/Sao_Paulo
