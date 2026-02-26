@@ -56,7 +56,13 @@ diretório-raiz/
    ```
 
 2. **Clone o repositório**  
-   Clone o projeto dentro do diretório `app`:
+   Clone o projeto dentro do diretório `app` (criado no passo anterior):
+
+   > **Atenção:**
+   > O repositório deve ser clonado dentro do diretório `app`.
+   > Isso é necessário porque o Docker Compose mapeia `diretório-raiz/app`
+   > como volume da aplicação. Clonar em outro local fará com que o
+   > container não encontre os arquivos.
 
    ```sh
    cd diretório-raiz/
