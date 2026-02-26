@@ -12,6 +12,7 @@ function validaCsrf($token) {
     return hash_equals($_SESSION['csrf_token'], $token);
 }
 
+// Função para sanitizar/padronizar os campos
 function normalizaCampos($dados, $campo) {
     
     $resultado = trim($dados[$campo] ?? null);
@@ -25,6 +26,35 @@ function normalizaCampos($dados, $campo) {
     }
 
     return $resultado;
+}
+
+//Função para validação dígitos verificadores de CPF
+function validaCPF($cpf) {
+    $cpf = preg_replace('/\D/', '', $cpf);
+
+if (preg_match('/^(\d)\1{10}$/', $cpf)) {
+        return false;
+    }
+
+    $soma = 0;
+    for ($i = 0; $i < 9; $i++) {
+        $soma += (int)$cpf[$i] * (10 - $i);
+    }
+    $resto = $soma % 11;
+    $digito1 = $resto < 2 ? 0 : 11 - $resto;
+
+    if ((int)$cpf[9] !== $digito1) {
+        return false;
+    }
+
+    $soma = 0;
+    for ($i = 0; $i < 10; $i++) {
+        $soma += (int)$cpf[$i] * (11 - $i);
+    }
+    $resto = $soma % 11;
+    $digito2 = $resto < 2 ? 0 : 11 - $resto;
+
+    return (int)$cpf[10] === $digito2;
 }
 
 //Função para validação de campos
@@ -48,6 +78,11 @@ function validaCampos($dados, $regras) {
             continue;
         }
 
+        if ($campo == 'cpf' && !validaCPF($dados[$campo])){
+            $erros[] = "O CPF informado é inválido.";
+            continue;
+        }
+
         if (isset($regra['select']) && !in_array($dados[$campo], $regra['select'], true)) {
             $erros[] = "Valor inválido para o campo {$campo}.";
             continue;
@@ -56,6 +91,7 @@ function validaCampos($dados, $regras) {
         if (isset($regra['email']) && !empty($dados[$campo]) && !filter_var($dados[$campo], $regra['email'])) {
             $erros[] = "O campo e-mail está incompleto ou com formato inválido";
         }
+        
     }
 
     return ['erros' => $erros, 'dados' => $dados];
@@ -153,7 +189,7 @@ function addMembro($dados) {
     
         error_log($err->getMessage());
         if (isset($err->errorInfo[1]) && $err->errorInfo[1] == 1062) {
-            return ['status' => false, 'msg' => 'CPF já cadastrado.'];
+            return ['status' => false, 'msg' => ' Membro já cadastrado.'];
         }
         else{
             return ['status' => false, 'msg' => "Não foi possível finalizar o cadastramento.\nContate o administrador."];
