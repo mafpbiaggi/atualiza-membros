@@ -27,6 +27,7 @@ CREATE TABLE `enderecos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `logradouro` varchar(70) NOT NULL,
   `numero` varchar(10) NOT NULL,
+  `semnumero` boolean NULL DEFAULT FALSE,
   `complemento` varchar(70) DEFAULT NULL,
   `bairro` varchar(45) NOT NULL,
   `cep` varchar(10) NOT NULL,

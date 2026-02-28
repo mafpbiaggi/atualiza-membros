@@ -16,7 +16,7 @@ if (empty($_SESSION['csrf_token'])) {
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
-    <link href="assets/css/appStyle.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
     <link href="assets/img/logo-fundo-branco.png" rel="icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
@@ -121,6 +121,11 @@ if (empty($_SESSION['csrf_token'])) {
                     <div class="input-group input-group-sm mb-3">
                         <label class="input-group-text" for="numero">Número:<span class="required">*</span></label>
                         <input class="form-control" name="numero" id="numero" type="text" required />
+                        <div class="form-check form-switch">
+                            <input name="semnumero" type="hidden" value="0" />
+                            <input class="form-check-input" name="semnumero" id="semnumero" type="checkbox" value="1" />
+                            <label class="form-check-label" for="semnumero">Sem Número</label>
+                        </div>
                     </div>
                 </div>
             </div>

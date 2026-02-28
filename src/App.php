@@ -17,12 +17,16 @@ function normalizaCampos($dados, $campo) {
     
     $resultado = trim($dados[$campo] ?? null);
 
-    if ($campo == 'email'){
+    if ($campo == 'email') {
         $resultado = mb_strtolower($resultado);
     }
 
     if (str_contains($campo, 'nome') || str_contains($campo, 'pastor') || str_contains($campo, 'igreja') || $campo == 'profissao' || $campo == 'logradouro' || $campo == 'complemento' || $campo == 'cidade' ) {
         $resultado = mb_strtoupper($resultado);
+    }
+
+    if ($campo == 'numero' && empty($dados[$campo])) {
+        $resultado = 'S/N';
     }
 
     return $resultado;
@@ -165,12 +169,13 @@ function addMembro($dados) {
 
         $membro_id = $conn->lastInsertId();
 
-        $queryEnd = "INSERT INTO enderecos (logradouro, numero, complemento, bairro, cep, cidade, estado, membro_id, user_id, church_id, created, modified)
-        VALUES (:logradouro, :numero, :complemento, :bairro, :cep, :cidade, :estado, :membro_id, 66, 22, NOW(), NOW())";
+        $queryEnd = "INSERT INTO enderecos (logradouro, numero, semnumero, complemento, bairro, cep, cidade, estado, membro_id, user_id, church_id, created, modified)
+        VALUES (:logradouro, :numero, :semnumero, :complemento, :bairro, :cep, :cidade, :estado, :membro_id, 66, 22, NOW(), NOW())";
 
         $stmtEnd = $conn->prepare($queryEnd);
         $stmtEnd->bindValue(':logradouro', $dados['logradouro']);
         $stmtEnd->bindValue(':numero', $dados['numero']);
+        $stmtEnd->bindValue(':semnumero', $dados['semnumero']);
         $stmtEnd->bindValue(':complemento', $dados['complemento']);
         $stmtEnd->bindValue(':cep', $dados['cep']);
         $stmtEnd->bindValue(':bairro', $dados['bairro']);
@@ -209,6 +214,7 @@ $regras = [
     
     'logradouro' => ['required' => true, 'max' => 50],
     'numero' => ['required' => true],
+    'semnumero' => ['required' => false],
     'bairro' => ['required' => true, 'max' => 30],
     'cep' => ['required' => true, 'max' => 9, 'format' => '/^\d{5}\-\d{3}$/'],
     'cidade' => ['required' => true],
