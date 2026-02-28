@@ -24,7 +24,7 @@ services:
     image: atualiza-membros-app:1.0
     build:
       context: ${BUILD_CONTEXT}
-      dockerfile: atualiza_membros.dockerfile
+      dockerfile: Dockerfile
     container_name: app_atualiza_membros
     env_file:
       - .env
