@@ -224,7 +224,7 @@ $regras = [
     'cel' => ['required' => false],
     'fone' => ['required' => false],
 
-    'rg' => ['required' => true, 'max' => 12, 'format' => '/^\d{2}\.\d{3}\.\d{3}-[Xx\d]$/'],
+    'rg' => ['required' => true, 'max' => 12, 'format' => '/^\d{2}\.\d{3}\.\d{3}(?:-[Xx\d])?$/'],
     'cpf' => ['required' => true, 'max' => 14, 'format' => '/^\d{3}\.\d{3}\.\d{3}-\d{2}$/'],
     'estadocivil' => ['required' => true, 'select' => ['1', '2', '3', '4', '5', '6']],
     'datacasamento' => ['required' => false, 'format' => '/^\d{4}-\d{2}-\d{2}$/'],
