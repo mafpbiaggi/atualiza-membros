@@ -30,8 +30,8 @@ diretório-raiz/
 |   |
 |   ├── docker/
 │   |   ├── .env.example
-│   |   ├── atualiza_membros.dockerfile
-│   |    └── dc-atualiza_membros.yaml
+│   |   ├── dockerfile
+│   |   └── docker-compose.yaml
 |   |
 |   ├── README.md
 |   └── .gitignore
@@ -80,13 +80,13 @@ diretório-raiz/
 
    > **Importante:**  
    > O arquivo `.env` deve permanecer no diretório `docker/`.  
-   > As informações já preenchidas neste arquivo **não devem ser alteradas** caso o arquivo `docker/dc-atualiza_membros.yaml` não seja modificado.
+   > As informações já preenchidas neste arquivo **não devem ser alteradas** caso o arquivo `docker/docker-compose.yaml` não seja modificado.
 
 4. **Inicie os containers com Docker Compose**  
    No diretório `docker/`, execute:
 
    ```sh
-   docker compose -f dc-atualiza_membros.yaml up -d --build
+   docker compose up -d --build
    ```
 
    Isso irá criar e iniciar os containers do banco de dados e da aplicação, mapeando os diretórios conforme especificado.
