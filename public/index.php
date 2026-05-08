@@ -206,7 +206,6 @@ if (empty($_SESSION['csrf_token'])) {
 
             <div class="row justify-content-md-center">
                 <div class="col col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
-                    <br>
                     <p class="obs"><b>Observação:</b> Preencha pelos menos um campo de contato.</p>
                     <div class="input-group input-group-sm mb-3">
                         <label class="input-group-text" for="email">E-mail:</label>
@@ -239,6 +238,7 @@ if (empty($_SESSION['csrf_token'])) {
                         <h6>Dados Complementares</h6>
                         <p>______________________</p>
                     </div>
+                    <p class="obs"><b>Observação:</b> Caso seu RG comece com apenas um dígito, inicie com zero.</p>
                     <div class="input-group input-group-sm mb-3">
                         <label class="input-group-text" for="rg">RG:<span class="required">*</span></label>
                         <input class="form-control" name="rg" id="rg" type="text" placeholder="Somente números" oninput="mask(this, 'RG')" maxlength="12" required />
